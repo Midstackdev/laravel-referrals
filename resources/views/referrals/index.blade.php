@@ -4,6 +4,43 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="card mb-2">
+                <div class="card-header">{{ __('Referrals') }}</div>
+
+                <div class="card-body">
+                    @if($referrals->count())
+                        <table class="table">  
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($referrals as $referral)
+                                    <tr>
+                                        <td>{{ $referral->email}}</td>
+                                        <td>{{ $referral->created_at->diffForHumans()}}</td>
+                                        <td>
+                                            @if($referral->completed)
+                                                Yes
+                                            @else
+                                                No &nbsp; <a href="{{ route('index', ['referral' => $referral->token]) }}" target="_blank">Get Link</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p class="mb-0">
+                            No referrals rigth now.
+                        </p>
+                    @endif
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">{{ __('Refer a friend') }}</div>
 

@@ -14,9 +14,11 @@ class ReferralController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('referrals.index');
+        $referrals = $request->user()->referrals()->orderBy('completed', 'asc')->get();
+
+        return view('referrals.index', compact('referrals'));
     }
 
     public function store(Request $request)
