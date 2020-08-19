@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-class Referrals extends Model
+class Referral extends Model
 {   
     /**
      * [$guarded description]
@@ -19,4 +20,13 @@ class Referrals extends Model
     protected $dates = [
         'completed_at'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Referral $referral) {
+            $referral->token = Str::random(50);
+        });
+    } 
 }
