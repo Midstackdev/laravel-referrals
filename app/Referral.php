@@ -21,6 +21,10 @@ class Referral extends Model
         'completed_at'
     ];
 
+    /**
+     * [boot description]
+     * @return [type] [description]
+     */
     public static function boot()
     {
         parent::boot();

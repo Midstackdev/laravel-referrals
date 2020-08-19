@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Referrals;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Referrals\ReferralReceived;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReferralController extends Controller
 {
@@ -19,7 +21,11 @@ class ReferralController extends Controller
 
     public function store(Request $request)
     {
-        $request->user()->referrals()->create($request->only('email'));
+        $referral = $request->user()->referrals()->create($request->only('email'));
+
+        Mail::to($referral->email)->send(
+            new ReferralReceived($request->user(), $referral)
+        );
 
         return back();
     }
